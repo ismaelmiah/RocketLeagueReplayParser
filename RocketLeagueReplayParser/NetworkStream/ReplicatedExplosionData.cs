@@ -8,8 +8,7 @@ namespace RocketLeagueReplayParser.NetworkStream
 {
     public class ReplicatedExplosionData
     {
-        public bool Unknown1 { get; private set; }
-        public UInt32 ActorId { get; private set; } // Probably
+        public ActiveActor Actor { get; private set; } 
         public Vector3D Position { get; private set; }
 
         public static ReplicatedExplosionData Deserialize(BitReader br, UInt32 netVersion)
@@ -23,15 +22,13 @@ namespace RocketLeagueReplayParser.NetworkStream
 
         protected virtual void DeserializeImpl(BitReader br, UInt32 netVersion)
         {
-            Unknown1 = br.ReadBit();
-            ActorId = br.ReadUInt32();
+            Actor = ActiveActor.Deserialize(br);
             Position = Vector3D.Deserialize(br, netVersion);
         }
 
         public virtual void Serialize(BitWriter bw, UInt32 netVersion)
         {
-            bw.Write(Unknown1);
-            bw.Write(ActorId);
+            Actor.Serialize(bw);
             Position.Serialize(bw, netVersion);
         }
     }

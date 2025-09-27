@@ -70,6 +70,7 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "TAGame.Stunlock_TA:Car":
                 case "TAGame.Car_KnockOut_TA:UsedAttackComponent":
                 case "TAGame.PRI_TA:ViralItemActor":
+                case "TAGame.Ball_Spawner_TA:SpawnedBall":
                     asp.Data = ActiveActor.Deserialize(br);
                     break;
                 case "TAGame.CrowdManager_TA:ReplicatedGlobalOneShotSound":
@@ -326,6 +327,8 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "TAGame.Stunlock_TA:MaxStunTime":
                 case "TAGame.PRI_TA:TotalGameTimePlayed":
                 case "TAGame.PRI_TA:TotalIdleTime":
+                case "TAGame.Ball_Spawner_TA:SpawnDelaySeconds":
+                case "TAGame.Ball_Fire_TA:TeamNumChangeTimestamp":
                     asp.Data = br.ReadFloat();
                     break;
                 case "TAGame.GameEvent_SoccarPrivate_TA:MatchSettings":
@@ -457,6 +460,7 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "TAGame.Stunlock_TA:Car":
                 case "TAGame.Car_KnockOut_TA:UsedAttackComponent":
                 case "TAGame.PRI_TA:ViralItemActor":
+                case "TAGame.Ball_Spawner_TA:SpawnedBall":
                     ((ActiveActor)data).Serialize(bw);
                     break;
                 case "TAGame.CrowdManager_TA:ReplicatedGlobalOneShotSound":
@@ -710,6 +714,8 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "TAGame.Stunlock_TA:MaxStunTime":
                 case "TAGame.PRI_TA:TotalGameTimePlayed":
                 case "TAGame.PRI_TA:TotalIdleTime":
+                case "TAGame.Ball_Spawner_TA:SpawnDelaySeconds":
+                case "TAGame.Ball_Fire_TA:TeamNumChangeTimestamp":
                     bw.Write((float)data);
                     break;
                 case "TAGame.GameEvent_SoccarPrivate_TA:MatchSettings":
