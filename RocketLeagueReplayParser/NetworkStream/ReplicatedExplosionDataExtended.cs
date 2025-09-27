@@ -8,8 +8,7 @@ namespace RocketLeagueReplayParser.NetworkStream
 {
     public class ReplicatedExplosionDataExtended : ReplicatedExplosionData
     {
-        public bool Unknown3 { get; private set; }
-        public UInt32 Unknown4 { get; private set; }
+        public ActiveActor SecondaryActor { get; private set; }
 
         public new static ReplicatedExplosionDataExtended Deserialize(BitReader br, UInt32 netVersion)
         {
@@ -23,15 +22,13 @@ namespace RocketLeagueReplayParser.NetworkStream
         protected override void DeserializeImpl(BitReader br, UInt32 netVersion)
         {
             base.DeserializeImpl(br, netVersion);
-            Unknown3 = br.ReadBit();
-            Unknown4 = br.ReadUInt32();
+            SecondaryActor = ActiveActor.Deserialize(br);
         }
 
         public override void Serialize(BitWriter bw, UInt32 netVersion)
         {
             base.Serialize(bw, netVersion);
-            bw.Write(Unknown3);
-            bw.Write(Unknown4);
+            SecondaryActor.Serialize(bw);
         }
     }
 }
