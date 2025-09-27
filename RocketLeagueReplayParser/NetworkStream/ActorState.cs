@@ -205,6 +205,11 @@ namespace RocketLeagueReplayParser.NetworkStream
                     return classNetCacheByName["TAGame.CarComponent_Boost_KO_TA"];
                 case "Archetypes.KnockOut.GameEvent_Knockout:CarArchetype.StunlockArchetype":
                     return classNetCacheByName["TAGame.Stunlock_TA"];
+                case "Archetypes.Ball.Ball_Fire_Obstacle":
+                    return classNetCacheByName["TAGame.Ball_Fire_TA"];
+                case "Archetypes.Ball.Ball_RingSpawner":
+                    return classNetCacheByName["TAGame.Ball_Spawner_TA"];
+
             }
 
             if (objectName.Contains("ViralItemActor_TA"))
@@ -278,7 +283,8 @@ namespace RocketLeagueReplayParser.NetworkStream
                 || className == "TAGame.Ball_Breakout_TA"
                 || className == "TAGame.Ball_Haunted_TA"
                 || className == "TAGame.Ball_God_TA"
-                || className == "TAGame.Car_KnockOut_TA";
+                || className == "TAGame.Car_KnockOut_TA"
+                || className == "TAGame.Ball_Fire_TA";
 		}
 
         public static ActorState Deserialize(int maxChannels, IDictionary<UInt32, ActorState> existingActorStates, List<ActorState> frameActorStates, string[] objectIndexToName, IDictionary<string, ClassNetCache> classNetCacheByName, UInt32 engineVersion, UInt32 licenseeVersion, UInt32 netVersion, UInt32 changelist, BitReader br)

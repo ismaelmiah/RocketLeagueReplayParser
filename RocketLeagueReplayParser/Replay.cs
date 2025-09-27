@@ -243,6 +243,8 @@ namespace RocketLeagueReplayParser
             replay.FixClassParent("TAGame.Ball_Breakout_TA", "TAGame.Ball_TA");
             // Fixes https://ballchasing.com/dl/replay/d48a1bf9-f315-40b6-9fc1-2ef550e4e0b0
             replay.FixClassParent("TAGame.Ball_God_TA", "TAGame.Ball_TA");
+            // Fixes https://ballchasing.com/dl/replay/2910b355-18bb-4263-b7d8-34c4dd53b263
+            replay.FixClassParent("TAGame.Ball_Fire_TA", "TAGame.Ball_God_TA");
 
             UInt32 changeList = 0;
             if ( replay.Properties.ContainsKey("Changelist"))
