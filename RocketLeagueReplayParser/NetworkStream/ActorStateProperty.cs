@@ -325,6 +325,7 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "TAGame.Stunlock_TA:StunTimeRemaining":
                 case "TAGame.Stunlock_TA:MaxStunTime":
                 case "TAGame.PRI_TA:TotalGameTimePlayed":
+                case "TAGame.PRI_TA:TotalIdleTime":
                     asp.Data = br.ReadFloat();
                     break;
                 case "TAGame.GameEvent_SoccarPrivate_TA:MatchSettings":
@@ -708,6 +709,7 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "TAGame.Stunlock_TA:StunTimeRemaining":
                 case "TAGame.Stunlock_TA:MaxStunTime":
                 case "TAGame.PRI_TA:TotalGameTimePlayed":
+                case "TAGame.PRI_TA:TotalIdleTime":
                     bw.Write((float)data);
                     break;
                 case "TAGame.GameEvent_SoccarPrivate_TA:MatchSettings":
