@@ -247,6 +247,7 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "TAGame.GameEvent_Soccar_TA:bShouldSpawnGoalIndicators":
                 case "TAGame.Car_TA:bUnlimitedTimeForDodge":
                 case "TAGame.GameEvent_Soccar_TA:bGoalsEnabled":
+                case "TAGame.Car_TA:bUnlimitedJumps":
                     asp.Data = br.ReadBit();
                     break;
                 case "TAGame.CarComponent_TA:ReplicatedActive":
@@ -631,6 +632,7 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "TAGame.GameEvent_Soccar_TA:bShouldSpawnGoalIndicators":
                 case "TAGame.Car_TA:bUnlimitedTimeForDodge":
                 case "TAGame.GameEvent_Soccar_TA:bGoalsEnabled":
+                case "TAGame.Car_TA:bUnlimitedJumps":
                     bw.Write((bool)data);
                     break;
                 case "TAGame.CarComponent_TA:ReplicatedActive":
