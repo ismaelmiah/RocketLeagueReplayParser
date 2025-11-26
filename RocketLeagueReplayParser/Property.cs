@@ -6,8 +6,6 @@ using System.Linq;
 
 namespace RocketLeagueReplayParser
 {
-    
-
     public class Property
     {
         public string Name { get; protected set; }
