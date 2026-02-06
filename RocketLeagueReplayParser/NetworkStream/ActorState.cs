@@ -104,6 +104,7 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "Gameinfo_Hockey.GameInfo.Gameinfo_Hockey:Archetype":
                 case "GameInfo_Basketball.GameInfo.GameInfo_Basketball:Archetype":
                 case "GameInfo_LTM_SpeedDemon.GameInfo.GameInfo_LTM_SpeedDemon:Archetype":
+                case "GameInfo_HeatseekerTerritory.GameInfo.GameInfo_HeatseekerTerritory:Archetype":
                     return classNetCacheByName["TAGame.GameEvent_Soccar_TA"];
                 case "Archetypes.GameEvent.GameEvent_SoccarPrivate":
                 case "Archetypes.GameEvent.GameEvent_BasketballPrivate":
@@ -129,6 +130,7 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "GameInfo_FTE.GameInfo.GameInfo_FTE:GameReplicationInfoArchetype":
                 case "GameInfo_KnockOut.KnockOut.GameInfo_KnockOut:GameReplicationInfoArchetype":
                 case "GameInfo_LTM_SpeedDemon.GameInfo.GameInfo_LTM_SpeedDemon:GameReplicationInfoArchetype":
+                case "GameInfo_HeatseekerTerritory.GameInfo.GameInfo_HeatseekerTerritory:GameReplicationInfoArchetype":
                     return classNetCacheByName["TAGame.GRI_TA"];
                 case "ProjectX.Default__NetModeReplicator_X":
                     return classNetCacheByName["ProjectX.NetModeReplicator_X"];
@@ -139,6 +141,8 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "NeoTokyo_P.TheWorld:PersistentLevel.InMapScoreboard_TA_1":
                 case "NeoTokyo_Standard_P.TheWorld:PersistentLevel.InMapScoreboard_TA_1":
                 case "NeoTokyo_Standard_P.TheWorld:PersistentLevel.InMapScoreboard_TA_0":
+                case "NeoTokyo_Arcade_P.TheWorld:PersistentLevel.InMapScoreboard_TA_0":
+                case "NeoTokyo_Arcade_P.TheWorld:PersistentLevel.InMapScoreboard_TA_1":
                     return classNetCacheByName["TAGame.InMapScoreboard_TA"];
                 case "Archetypes.SpecialPickups.SpecialPickup_GravityWell":
                     return classNetCacheByName["TAGame.SpecialPickup_BallGravity_TA"];
@@ -209,6 +213,10 @@ namespace RocketLeagueReplayParser.NetworkStream
                     return classNetCacheByName["TAGame.Ball_Fire_TA"];
                 case "Archetypes.Ball.Ball_RingSpawner":
                     return classNetCacheByName["TAGame.Ball_Spawner_TA"];
+                case "TAGame.Default__TrackerWallDynamicMeshActor_TA":
+                    return classNetCacheByName["TAGame.TrackerWallDynamicMeshActor_TA"];
+                case "Archetypes.CarComponents.CarComponent_TerritoryDemolish":
+                    return classNetCacheByName["TAGame.CarComponent_TerritoryDemolish_TA"];
 
             }
 
