@@ -25,13 +25,21 @@ namespace RocketLeagueReplayParser.NetworkStream
             _classNetCache = copyFrom._classNetCache;
         }
 
-        public static ActorStateProperty Deserialize(IClassNetCache classMap, string[] objectIndexToName, UInt32 engineVersion, UInt32 licenseeVersion, UInt32 netVersion, UInt32 changelist, BitReader br)
+        public static ActorStateProperty Deserialize(
+            IClassNetCache classMap,
+            string[] objectIndexToName,
+            UInt32 engineVersion,
+            UInt32 licenseeVersion,
+            UInt32 netVersion,
+            UInt32 changelist,
+            BitReader br
+        )
         {
             var asp = new ActorStateProperty();
 
             asp._classNetCache = classMap;
             var maxPropId = classMap.MaxPropertyId;
-            
+
             asp.PropertyId = br.ReadUInt32Max(maxPropId + 1);
             asp.PropertyName = objectIndexToName[classMap.GetProperty((int)asp.PropertyId).Index];
 
@@ -133,6 +141,7 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "TAGame.PRI_TA:CarDemolitions":
                 case "TAGame.Car_TA:MaxNumJumps":
                 case "TAGame.PRI_TA:MatchDemolishes":
+                case "TAGame.Car_TA:DodgesRefreshedCounter":
                     asp.Data = br.ReadUInt32();
                     break;
                 case "ProjectX.GRI_X:ReplicatedGameMutatorIndex":
@@ -255,7 +264,7 @@ namespace RocketLeagueReplayParser.NetworkStream
                     asp.Data = br.ReadBit();
                     break;
                 case "TAGame.CarComponent_TA:ReplicatedActive":
-                    // The car component is active if (ReplicatedValue%2)!=0 
+                    // The car component is active if (ReplicatedValue%2)!=0
                     // For now I am only adding that logic to the JSON serializer
                     asp.Data = br.ReadByte();
                     break;
@@ -288,7 +297,12 @@ namespace RocketLeagueReplayParser.NetworkStream
                     }
                     break;
                 case "ProjectX.GRI_X:Reservations":
-                    asp.Data = Reservation.Deserialize(engineVersion, licenseeVersion, netVersion, br);
+                    asp.Data = Reservation.Deserialize(
+                        engineVersion,
+                        licenseeVersion,
+                        netVersion,
+                        br
+                    );
                     break;
                 case "TAGame.Car_TA:ReplicatedDemolish":
                     asp.Data = ReplicatedDemolish.Deserialize(br, netVersion);
@@ -338,7 +352,12 @@ namespace RocketLeagueReplayParser.NetworkStream
                     asp.Data = PrivateMatchSettings.Deserialize(br);
                     break;
                 case "TAGame.PRI_TA:ClientLoadoutOnline":
-                    asp.Data = ClientLoadoutOnline.Deserialize(br, engineVersion, licenseeVersion, objectIndexToName);
+                    asp.Data = ClientLoadoutOnline.Deserialize(
+                        br,
+                        engineVersion,
+                        licenseeVersion,
+                        objectIndexToName
+                    );
                     break;
                 case "TAGame.GameEvent_TA:GameMode":
                     if (engineVersion >= 868 && licenseeVersion >= 12)
@@ -351,7 +370,12 @@ namespace RocketLeagueReplayParser.NetworkStream
                     }
                     break;
                 case "TAGame.PRI_TA:ClientLoadoutsOnline":
-                    asp.Data = ClientLoadoutsOnline.Deserialize(br, engineVersion, licenseeVersion, objectIndexToName);
+                    asp.Data = ClientLoadoutsOnline.Deserialize(
+                        br,
+                        engineVersion,
+                        licenseeVersion,
+                        objectIndexToName
+                    );
                     break;
                 case "TAGame.PRI_TA:ClientLoadouts":
                     asp.Data = ClientLoadouts.Deserialize(br);
@@ -405,29 +429,58 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "TAGame.RumblePickups_TA:PickupInfo":
                     asp.Data = PickupInfo.Deserialize(br);
                     break;
-                case "TAGame.CarComponent_Boost_TA:ReplicatedBoost":                    
+                case "TAGame.CarComponent_Boost_TA:ReplicatedBoost":
                     asp.Data = ReplicatedBoost.Deserialize(br);
                     break;
                 case "TAGame.Car_KnockOut_TA:ReplicatedImpulse":
                     asp.Data = ImpulseData.Deserialize(br);
                     break;
                 default:
-                    throw new NotSupportedException(string.Format("Unknown property {0}. Next bits in the data are {1}. Figure it out!", asp.PropertyName, br.GetBits(br.Position, Math.Min(4096, br.Length - br.Position)).ToBinaryString()));
+                    throw new NotSupportedException(
+                        string.Format(
+                            "Unknown property {0}. Next bits in the data are {1}. Figure it out!",
+                            asp.PropertyName,
+                            br.GetBits(br.Position, Math.Min(4096, br.Length - br.Position))
+                                .ToBinaryString()
+                        )
+                    );
             }
 
             return asp;
         }
 
-        public virtual void Serialize(UInt32 engineVersion, UInt32 licenseeVersion, UInt32 netVersion, UInt32 changelist, BitWriter bw)
+        public virtual void Serialize(
+            UInt32 engineVersion,
+            UInt32 licenseeVersion,
+            UInt32 netVersion,
+            UInt32 changelist,
+            BitWriter bw
+        )
         {
             bw.Write(PropertyId, (UInt32)_classNetCache.MaxPropertyId + 1);
 
-            SerializeData(engineVersion, licenseeVersion, netVersion, changelist, bw, PropertyName, Data);
+            SerializeData(
+                engineVersion,
+                licenseeVersion,
+                netVersion,
+                changelist,
+                bw,
+                PropertyName,
+                Data
+            );
         }
 
-        protected static void SerializeData(uint engineVersion, uint licenseeVersion, UInt32 netVersion, UInt32 changelist, BitWriter bw, string propertyName, object data)
+        protected static void SerializeData(
+            uint engineVersion,
+            uint licenseeVersion,
+            UInt32 netVersion,
+            UInt32 changelist,
+            BitWriter bw,
+            string propertyName,
+            object data
+        )
         {
-            // TODO: Make it so each property is typed better, so I serialize/deserialize types 
+            // TODO: Make it so each property is typed better, so I serialize/deserialize types
             // instead of having separate serialize/deserialize logic for each property.
             // Will also make it do I dont have to do so much casting from object
             switch (propertyName)
@@ -481,7 +534,7 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "TAGame.GRI_TA:NewDedicatedServerIP":
                 case "ProjectX.GRI_X:MatchGUID":
                 case "ProjectX.GRI_X:MatchGuid": // Can remove as duplicate in case the comparison is ever made case insensitive
-                case "TAGame.PRI_TA:CurrentVoiceRoom":                
+                case "TAGame.PRI_TA:CurrentVoiceRoom":
                 case "ProjectX.GRI_X:ReplicatedServerRegion":
                 case "TAGame.GameEvent_TA:RichPresenceString":
                     ((string)data).Serialize(bw);
@@ -524,6 +577,7 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "TAGame.PRI_TA:CarDemolitions":
                 case "TAGame.Car_TA:MaxNumJumps":
                 case "TAGame.PRI_TA:MatchDemolishes":
+                case "TAGame.Car_TA:DodgesRefreshedCounter":
                     bw.Write((UInt32)data);
                     break;
                 case "ProjectX.GRI_X:ReplicatedGameMutatorIndex":
@@ -802,7 +856,9 @@ namespace RocketLeagueReplayParser.NetworkStream
                     ((ImpulseData)data).Serialize(bw);
                     break;
                 default:
-                    throw new NotSupportedException("Unknown property found in serializer: " + propertyName);
+                    throw new NotSupportedException(
+                        "Unknown property found in serializer: " + propertyName
+                    );
             }
         }
 
@@ -822,7 +878,6 @@ namespace RocketLeagueReplayParser.NetworkStream
             s += "    Data: " + string.Join(", ", Data) + "\r\n";
 
             return s;
-
         }
     }
 }
