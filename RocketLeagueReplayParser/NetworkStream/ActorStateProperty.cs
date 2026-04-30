@@ -101,6 +101,8 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "TAGame.PRI_TA:CurrentVoiceRoom":
                 case "ProjectX.GRI_X:ReplicatedServerRegion":
                 case "TAGame.GameEvent_TA:RichPresenceString":
+                case "TAGame.GRI_TA:LanMatchGUID":
+                case "TAGame.PRI_TA:EpicPUID":
                     asp.Data = br.ReadString();
                     break;
                 case "TAGame.GameEvent_Soccar_TA:SecondsRemaining":
@@ -538,6 +540,8 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "TAGame.PRI_TA:CurrentVoiceRoom":
                 case "ProjectX.GRI_X:ReplicatedServerRegion":
                 case "TAGame.GameEvent_TA:RichPresenceString":
+                case "TAGame.GRI_TA:LanMatchGUID":
+                case "TAGame.PRI_TA:EpicPUID":
                     ((string)data).Serialize(bw);
                     break;
                 case "TAGame.GameEvent_Soccar_TA:SecondsRemaining":
