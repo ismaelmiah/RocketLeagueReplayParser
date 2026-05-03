@@ -264,6 +264,7 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "TAGame.GameEvent_Soccar_TA:bFullMatchWinnerDecided":
                 case "TAGame.Ball_TA:bWarnBallReset":
                 case "TAGame.PRI_TA:bIdleBanned":
+                case "TAGame.Vehicle_TA:bPodiumMode":
                     asp.Data = br.ReadBit();
                     break;
                 case "TAGame.CarComponent_TA:ReplicatedActive":
@@ -704,6 +705,7 @@ namespace RocketLeagueReplayParser.NetworkStream
                 case "TAGame.GameEvent_Soccar_TA:bFullMatchWinnerDecided":
                 case "TAGame.Ball_TA:bWarnBallReset":
                 case "TAGame.PRI_TA:bIdleBanned":
+                case "TAGame.Vehicle_TA:bPodiumMode":
                     bw.Write((bool)data);
                     break;
                 case "TAGame.CarComponent_TA:ReplicatedActive":
